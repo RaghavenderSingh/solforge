@@ -8,7 +8,7 @@ export function LandingPage() {
   const router = useRouter();
   return (
     <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
-      {/* Full-screen gradient background image */}
+
       <div className="absolute inset-0 pointer-events-none">
         <Image
           src="/gradient-background.svg"
@@ -17,22 +17,15 @@ export function LandingPage() {
           className="object-cover opacity-60"
           priority
         />
-        {/* Overlay to darken and blend */}
+    
         <div className="absolute inset-0 bg-background/50" />
-        {/* Subtle grid */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(oklch(1 0 0) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0) 1px, transparent 1px)",
-            backgroundSize: "72px 72px",
-          }}
-        />
+    
+    
       </div>
 
       <Navbar />
 
-      {/* Hero */}
+
       <div className="flex-1 flex flex-col items-center justify-center px-4 pb-20 pt-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -40,7 +33,7 @@ export function LandingPage() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex flex-col items-center text-center max-w-4xl mx-auto mb-10"
         >
-          {/* Headline */}
+  
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -58,7 +51,7 @@ export function LandingPage() {
             in seconds
           </motion.h1>
 
-          {/* Subtitle */}
+     
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -66,7 +59,7 @@ export function LandingPage() {
             className="text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed"
           >
             Describe your program in plain English. Get production-ready Anchor code,
-            TypeScript clients, and deployment scripts — instantly.
+            TypeScript clients, and deployment scripts instantly.
           </motion.p>
         </motion.div>
 

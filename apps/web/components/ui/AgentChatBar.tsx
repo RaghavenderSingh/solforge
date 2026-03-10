@@ -4,12 +4,7 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-const suggestions = [
-  { icon: Zap, label: "Token Program", prompt: "Create an SPL token with mint authority and transfer functions" },
-  { icon: Code2, label: "NFT Collection", prompt: "Build an NFT collection with metadata and royalty enforcement" },
-  { icon: Shield, label: "Staking Vault", prompt: "Design a staking vault with rewards distribution" },
-  { icon: Sparkles, label: "DAO Governance", prompt: "Create a DAO with proposal voting and treasury management" },
-];
+
 
 const models = [
   { id: "gemini-flash", label: "Gemini 2.0 Flash", badge: "Free", badgeColor: "text-emerald-400 bg-emerald-400/10", desc: "Fast, free tier" },
@@ -71,27 +66,8 @@ const AgentChatBar = ({ onSubmit: onSubmitProp }: { onSubmit?: (message: string,
 
   return (
     <div className="w-full max-w-[760px] mx-auto px-4">
-      {/* Suggestion Chips */}
-      <div className="flex flex-wrap justify-center gap-2.5 mb-6">
-        {suggestions.map((s, i) => (
-          <motion.button
-            key={s.label}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 + i * 0.08, duration: 0.45, ease: "easeOut" }}
-            onClick={() => handleSuggestion(s.prompt)}
-            className="group relative flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs font-medium text-muted-foreground hover:text-foreground transition-all duration-300 overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-card/60 backdrop-blur-md group-hover:bg-primary/[0.07] transition-colors duration-300" />
-            <div className="absolute inset-0 rounded-2xl border border-border/40 group-hover:border-primary/25 transition-colors duration-300" />
-            <s.icon size={14} className="relative z-10 text-primary/50 group-hover:text-primary transition-colors duration-300" />
-            <span className="relative z-10">{s.label}</span>
-          </motion.button>
-        ))}
-      </div>
-
-      {/* Main Chat Bar */}
-      <motion.div
+   
+   <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}

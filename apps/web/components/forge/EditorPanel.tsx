@@ -1,6 +1,7 @@
 "use client";
+import { useState } from "react";
 import Editor, { type BeforeMount } from "@monaco-editor/react";
-import { FileCode2, Package, Code2, TestTube2, FileText } from "lucide-react";
+import { FileCode2, Package, Code2, TestTube2, FileText, Copy, Check } from "lucide-react";
 
 const FILE_META: Record<string, { icon: React.ElementType; color: string; lang: string }> = {
   "lib.rs": { icon: FileCode2, color: "text-orange-400/70", lang: "rust" },
@@ -78,17 +79,45 @@ export function EditorPanel({
   onChange: (filename: string, value: string) => void;
   isGenerating: boolean;
 }) {
+  const [copied, setCopied] = useState(false);
+
   const meta = FILE_META[activeFile] ?? { icon: FileText, color: "text-white/40", lang: "plaintext" };
   const Icon = meta.icon;
   const content = files[activeFile] ?? PLACEHOLDERS[activeFile] ?? "";
   const hasFiles = Object.keys(files).length > 0;
 
+  const handleCopy = () => {
+    if (!files[activeFile]) return;
+    navigator.clipboard.writeText(files[activeFile]!);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="flex-1 flex flex-col overflow-hidden min-w-0" style={{ background: "#000000" }}>
       {/* File tab header */}
-      <div className="h-11 shrink-0 flex items-center px-4 border-b border-white/6 gap-2" style={{ background: "#0a0a0a" }}>
-        <Icon size={13} className={meta.color} />
-        <span className="text-[12px] font-mono text-white/50">{activeFile}</span>
+      <div
+        className="h-11 shrink-0 flex items-center justify-between px-4 border-b border-white/6 gap-2"
+        style={{ background: "#0a0a0a" }}
+      >
+        <div className="flex items-center gap-2 min-w-0">
+          <Icon size={13} className={meta.color} />
+          <span className="text-[12px] font-mono text-white/45 truncate">{activeFile}</span>
+        </div>
+
+        {files[activeFile] && (
+          <button
+            onClick={handleCopy}
+            className="flex items-center gap-1.5 h-6 px-2 rounded-md border border-white/6 bg-white/3 hover:bg-white/6 transition-all text-[10px] text-white/30 hover:text-white/55 shrink-0"
+          >
+            {copied ? (
+              <Check size={10} className="text-emerald-400" />
+            ) : (
+              <Copy size={10} />
+            )}
+            {copied ? "Copied" : "Copy"}
+          </button>
+        )}
       </div>
 
       {/* Editor */}
@@ -99,12 +128,12 @@ export function EditorPanel({
               {[0, 1, 2].map((i) => (
                 <div
                   key={i}
-                  className="w-1.5 h-1.5 rounded-full bg-primary/50 animate-bounce"
+                  className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-bounce"
                   style={{ animationDelay: `${i * 0.14}s` }}
                 />
               ))}
             </div>
-            <p className="text-xs text-white/25 font-mono">generating {activeFile}…</p>
+            <p className="text-xs text-white/20 font-mono">generating {activeFile}…</p>
           </div>
         )}
         <Editor
